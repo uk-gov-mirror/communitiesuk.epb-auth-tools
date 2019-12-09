@@ -1,9 +1,5 @@
-# frozen_string_literal: true
-
-require 'jwt'
-
 module Auth
-  class Token
+  class TokenProcessor
     def initialize(jwt_secret, jwt_issuer)
       @jwt_secret = jwt_secret
       @jwt_issuer = jwt_issuer
@@ -18,7 +14,7 @@ module Auth
     private
 
     def jwt_process(token)
-      options = { algorithm: 'HS256', iss: @jwt_issuer }
+      options = {algorithm: 'HS256', iss: @jwt_issuer}
 
       JWT.decode token, @jwt_secret, true, options
 
