@@ -62,6 +62,12 @@ describe Auth::TokenProcessor do
         Auth::Token
       )
     end
+
+    it 'does return an instance of Auth::Token that has some scopes' do
+      token = @token_processor.process @valid_token
+
+      expect(token.scope?('scope:1')).to be(true)
+    end
   end
 
   context 'when a token is not a JWT token' do

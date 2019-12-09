@@ -14,7 +14,7 @@ module Auth
       raise Auth::TokenNotYetValid unless payload['iat'] <= Time.now.to_i
       raise Auth::TokenHasNoSubject unless payload.key?('sub')
 
-      Auth::Token.new
+      Auth::Token.new payload
     end
 
     private
