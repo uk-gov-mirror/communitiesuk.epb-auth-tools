@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'jwt'
 require 'rspec'
 
@@ -10,15 +11,42 @@ describe Auth::TokenProcessor do
   before do
     @jwt_secret = 'thisisa32charactersecretstring!!'
     @jwt_issuer = 'test.issuer'
-    @malformed_token = Base64.encode64 'I am all wrong'
-    @incorrect_issuer_token = token_generate @jwt_secret, 'not.an.issuer'
-    @expired_token =
-      token_generate @jwt_secret, @jwt_issuer, Time.now.to_i - 60 * 60
-    @premature_token =
-      token_generate @jwt_secret, @jwt_issuer, nil, Time.now.to_i + 60 * 60
-    @valid_token = token_generate @jwt_secret, @jwt_issuer
 
     @token_processor = Auth::TokenProcessor.new @jwt_secret, @jwt_issuer
+
+    @malformed_token = Base64.encode64 'I am all wrong'
+
+    @incorrect_issuer_token =
+      token_generate @jwt_secret,
+                     exp: Time.now.to_i + 60 * 60,
+                     iat: Time.now.to_i,
+                     iss: 'incorrect.issuer',
+                     sub: uuid_generate,
+                     scopes: %w[scope:1 scope:2]
+
+    @expired_token =
+      token_generate @jwt_secret,
+                     exp: Time.now.to_i - 60 * 60,
+                     iat: Time.now.to_i,
+                     iss: @jwt_issuer,
+                     sub: uuid_generate,
+                     scopes: %w[scope:1 scope:2]
+
+    @premature_token =
+      token_generate @jwt_secret,
+                     exp: Time.now.to_i + 60 * 60,
+                     iat: Time.now.to_i + 30 * 60,
+                     iss: @jwt_issuer,
+                     sub: uuid_generate,
+                     scopes: %w[scope:1 scope:2]
+
+    @valid_token =
+      token_generate @jwt_secret,
+                     exp: Time.now.to_i + 60 * 60,
+                     iat: Time.now.to_i,
+                     iss: @jwt_issuer,
+                     sub: uuid_generate,
+                     scopes: %w[scope:1 scope:2]
   end
 
   context 'when a token is valid' do

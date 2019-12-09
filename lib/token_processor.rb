@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Auth
   class TokenProcessor
     def initialize(jwt_secret, jwt_issuer)
