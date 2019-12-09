@@ -5,6 +5,11 @@ Gem::Specification.new do |s|
   s.version = '0.0.0'
   s.date = '2019-12-04'
   s.summary = 'Tools for authentication and authorisation with JWTs and OAuth'
+  s.authors = [
+      'Lawrence Goldstien <lawrence.goldstien@madetech.com>',
+      'Yusuf Sheikh <yusuf@madetech.com>',
+      'Jaseera <jaseera@madetech.com>'
+  ]
   s.files = [
     'lib/epb_auth_tools.rb'
   ]
