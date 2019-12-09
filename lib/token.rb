@@ -11,6 +11,8 @@ module Auth
 
     def process(token)
       payload, _header = jwt_process token
+
+      raise Auth::WrongIssuer unless payload['iss'] == @jwt_issuer
     end
 
     private
@@ -25,5 +27,8 @@ module Auth
   end
 
   class TokenMalformed < JWT::DecodeError
+  end
+
+  class WrongIssuer < JWT::InvalidIssuerError
   end
 end

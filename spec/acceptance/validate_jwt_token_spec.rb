@@ -22,6 +22,17 @@ describe 'Auth::Token' do
       end.to raise_error(instance_of(Auth::TokenMalformed))
     end
   end
+
+  context 'when a token has a different issuer' do
+    it 'does throw an Auth::WrongIssuer Error' do
+      token = Auth::Token.new @jwt_secret, @jwt_issuer
+
+      expect do
+        puts @incorrect_issuer_token
+        token.process @incorrect_issuer_token
+      end.to raise_error(instance_of(Auth::WrongIssuer))
+    end
+  end
 end
 
 
