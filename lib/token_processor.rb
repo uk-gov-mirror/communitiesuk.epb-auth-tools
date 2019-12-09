@@ -9,6 +9,7 @@ module Auth
       payload, _header = jwt_process token
 
       raise Auth::WrongIssuer unless payload['iss'] == @jwt_issuer
+      raise Auth::TokenNotYetValid unless payload['iat'] <= Time.now.to_i
 
       Auth::Token.new
     end
@@ -31,4 +32,6 @@ module Auth
   class TokenExpired < JWT::ExpiredSignature; end
 
   class WrongIssuer < JWT::InvalidIssuerError; end
+
+  class TokenNotYetValid < JWT::InvalidIatError; end
 end

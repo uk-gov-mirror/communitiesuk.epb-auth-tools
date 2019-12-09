@@ -14,6 +14,8 @@ describe Auth::TokenProcessor do
     @incorrect_issuer_token = token_generate @jwt_secret, 'not.an.issuer'
     @expired_token =
       token_generate @jwt_secret, @jwt_issuer, Time.now.to_i - 60 * 60
+    @premature_token =
+      token_generate @jwt_secret, @jwt_issuer, nil, Time.now.to_i + 60 * 60
     @valid_token = token_generate @jwt_secret, @jwt_issuer
 
     @token_processor = Auth::TokenProcessor.new @jwt_secret, @jwt_issuer
@@ -47,6 +49,14 @@ describe Auth::TokenProcessor do
     it 'does throw an Auth::TokenExpired Error' do
       expect { @token_processor.process @expired_token }.to raise_error(
         instance_of(Auth::TokenExpired)
+      )
+    end
+  end
+
+  context 'when a token was issued in the future' do
+    it 'does throw an Auth::TokenNotYetValid Error' do
+      expect { @token_processor.process @premature_token }.to raise_error(
+        instance_of(Auth::TokenNotYetValid)
       )
     end
   end
