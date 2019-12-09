@@ -25,7 +25,6 @@ module Auth
       options = { algorithm: 'HS256', iss: @jwt_issuer }
 
       JWT.decode token, @jwt_secret, true, options
-
     rescue JWT::ExpiredSignature
       raise Auth::TokenExpired
     rescue JWT::DecodeError
