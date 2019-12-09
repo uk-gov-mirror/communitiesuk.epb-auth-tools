@@ -9,29 +9,26 @@ module Auth
       payload, _header = jwt_process token
 
       raise Auth::WrongIssuer unless payload['iss'] == @jwt_issuer
+
+      Auth::Token.new
     end
 
     private
 
     def jwt_process(token)
-      options = {algorithm: 'HS256', iss: @jwt_issuer}
+      options = { algorithm: 'HS256', iss: @jwt_issuer }
 
       JWT.decode token, @jwt_secret, true, options
-
     rescue JWT::ExpiredSignature
       raise Auth::TokenExpired
-
     rescue JWT::DecodeError
       raise Auth::TokenMalformed
     end
   end
 
-  class TokenMalformed < JWT::DecodeError
-  end
+  class TokenMalformed < JWT::DecodeError; end
 
-  class TokenExpired < JWT::ExpiredSignature
-  end
+  class TokenExpired < JWT::ExpiredSignature; end
 
-  class WrongIssuer < JWT::InvalidIssuerError
-  end
+  class WrongIssuer < JWT::InvalidIssuerError; end
 end
