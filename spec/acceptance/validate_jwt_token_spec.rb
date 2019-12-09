@@ -38,10 +38,10 @@ describe Auth::TokenProcessor do
   end
 
   context 'when a token has a different issuer' do
-    it 'does throw an Auth::WrongIssuer Error' do
+    it 'does throw an Auth::TokenHasWrongIssuer Error' do
       expect {
         @token_processor.process @incorrect_issuer_token
-      }.to raise_error(instance_of(Auth::WrongIssuer))
+      }.to raise_error(instance_of(Auth::TokenHasWrongIssuer))
     end
   end
 
