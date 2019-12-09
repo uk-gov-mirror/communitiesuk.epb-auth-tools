@@ -9,5 +9,9 @@ module Auth
     def scope?(scope)
       @payload['scopes'].include? scope
     end
+
+    def scopes?(scopes)
+      scopes.all? { |scope| @payload['scopes'].include? scope }
+    end
   end
 end

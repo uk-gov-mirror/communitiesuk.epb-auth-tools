@@ -19,7 +19,7 @@ describe Auth::TokenProcessor do
                      iat: Time.now.to_i,
                      iss: 'incorrect.issuer',
                      sub: uuid_generate,
-                     scopes: %w[scope:1 scope:2]
+                     scopes: %w[scope:1 scope:2 scope:3]
 
     @expired_token =
       token_generate @jwt_secret,
@@ -27,7 +27,7 @@ describe Auth::TokenProcessor do
                      iat: Time.now.to_i,
                      iss: @jwt_issuer,
                      sub: uuid_generate,
-                     scopes: %w[scope:1 scope:2]
+                     scopes: %w[scope:1 scope:2 scope:3]
 
     @premature_token =
       token_generate @jwt_secret,
@@ -35,14 +35,14 @@ describe Auth::TokenProcessor do
                      iat: Time.now.to_i + 30 * 60,
                      iss: @jwt_issuer,
                      sub: uuid_generate,
-                     scopes: %w[scope:1 scope:2]
+                     scopes: %w[scope:1 scope:2 scope:3]
 
     @no_sub_token =
       token_generate @jwt_secret,
                      exp: Time.now.to_i + 60 * 60,
                      iat: Time.now.to_i,
                      iss: @jwt_issuer,
-                     scopes: %w[scope:1 scope:2]
+                     scopes: %w[scope:1 scope:2 scope:3]
 
     @valid_token =
       token_generate @jwt_secret,
@@ -50,7 +50,7 @@ describe Auth::TokenProcessor do
                      iat: Time.now.to_i,
                      iss: @jwt_issuer,
                      sub: uuid_generate,
-                     scopes: %w[scope:1 scope:2]
+                     scopes: %w[scope:1 scope:2 scope:3]
   end
 
   context 'when a token is valid' do
@@ -60,10 +60,16 @@ describe Auth::TokenProcessor do
       )
     end
 
-    it 'does return an instance of Auth::Token that has some scopes' do
+    it 'does allow checking a scope' do
       token = @token_processor.process @valid_token
 
       expect(token.scope?('scope:1')).to be true
+    end
+
+    it 'does allow checking a number of scopes' do
+      token = @token_processor.process @valid_token
+
+      expect(token.scopes?(%w[scope:1 scope:2])).to be true
     end
   end
 
