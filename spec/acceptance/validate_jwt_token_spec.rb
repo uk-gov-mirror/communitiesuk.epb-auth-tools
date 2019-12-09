@@ -40,6 +40,13 @@ describe Auth::TokenProcessor do
                      sub: uuid_generate,
                      scopes: %w[scope:1 scope:2]
 
+    @no_sub_token =
+      token_generate @jwt_secret,
+                     exp: Time.now.to_i + 60 * 60,
+                     iat: Time.now.to_i,
+                     iss: @jwt_issuer,
+                     scopes: %w[scope:1 scope:2]
+
     @valid_token =
       token_generate @jwt_secret,
                      exp: Time.now.to_i + 60 * 60,
@@ -57,7 +64,7 @@ describe Auth::TokenProcessor do
     end
   end
 
-  context 'when a token is malformed' do
+  context 'when a token is not a JWT token' do
     it 'does throw an Auth::TokenMalformed Error' do
       expect { @token_processor.process @malformed_token }.to raise_error(
         instance_of(Auth::TokenMalformed)
@@ -85,6 +92,14 @@ describe Auth::TokenProcessor do
     it 'does throw an Auth::TokenNotYetValid Error' do
       expect { @token_processor.process @premature_token }.to raise_error(
         instance_of(Auth::TokenNotYetValid)
+      )
+    end
+  end
+
+  context 'when a token does not have a subject' do
+    it 'does throw an Auth::TokenHasNoSubject Error' do
+      expect { @token_processor.process @no_sub_token }.to raise_error(
+        instance_of(Auth::TokenHasNoSubject)
       )
     end
   end
