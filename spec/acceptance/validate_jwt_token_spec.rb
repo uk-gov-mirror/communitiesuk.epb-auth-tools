@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require 'jwt'
-require 'rspec'
-
-require_relative '../../lib/token_processor'
-require_relative '../../lib/token'
 require_relative '../spec_helper'
+require 'token_processor'
+require 'token'
 
 describe Auth::TokenProcessor do
   before do
@@ -66,7 +63,7 @@ describe Auth::TokenProcessor do
     it 'does return an instance of Auth::Token that has some scopes' do
       token = @token_processor.process @valid_token
 
-      expect(token.scope?('scope:1')).to be(true)
+      expect(token.scope?('scope:1')).to be true
     end
   end
 
