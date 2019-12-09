@@ -64,12 +64,14 @@ describe Auth::TokenProcessor do
       token = @token_processor.process @valid_token
 
       expect(token.scope?('scope:1')).to be true
+      expect(token.scope?('does-not-exist')).to be false
     end
 
     it 'does allow checking a number of scopes' do
       token = @token_processor.process @valid_token
 
       expect(token.scopes?(%w[scope:1 scope:2])).to be true
+      expect(token.scope?(%w[scope:1 does-not-exist])).to be false
     end
   end
 
