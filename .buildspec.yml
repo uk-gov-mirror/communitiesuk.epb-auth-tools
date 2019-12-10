@@ -10,5 +10,7 @@ phases:
       - make install
   build:
     commands:
-      - echo ">>>>>>>> Running the tests..."
       - make test
+  post_build:
+    commands:
+      - make gem-test
