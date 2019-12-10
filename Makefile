@@ -17,3 +17,7 @@ test: ## Run all tests
 .PHONY: format
 format: ## Format ruby files using .editorconfig
 	@bundle exec rbprettier --write '**/*.rb' 'Gemfile' '*.gemspec'
+
+.PHONY: gem-test
+gem-test: ## Run tests for gem
+	@script/gem-test.sh
