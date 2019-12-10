@@ -27,6 +27,8 @@ module Auth
       JWT.decode token, @jwt_secret, true, options
     rescue JWT::ExpiredSignature
       raise Auth::TokenExpired
+    rescue JWT::VerificationError
+      raise Auth::TokenTamperDetected
     rescue JWT::DecodeError
       raise Auth::TokenMalformed
     end
@@ -41,4 +43,6 @@ module Auth
   class TokenNotYetValid < JWT::InvalidIatError; end
 
   class TokenHasNoSubject < StandardError; end
+
+  class TokenTamperDetected < JWT::VerificationError; end
 end

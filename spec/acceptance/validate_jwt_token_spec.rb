@@ -78,4 +78,18 @@ describe Auth::TokenProcessor do
       }.to raise_error(instance_of(Auth::TokenHasNoSubject))
     end
   end
+
+  context 'when a token has been edited after generation' do
+    it 'does throw an Auth::TokenTamperDetection Error' do
+      expect {
+        jwt = token_generate(@jwt_secret, :valid_token)
+        jwt = jwt.split('.')
+        payload = JSON.parse Base64.decode64 jwt[1]
+        payload['scopes'] = %w[admin:*]
+        jwt[1] = Base64.encode64 payload.to_json
+
+        @token_processor.process jwt.join('.')
+      }.to raise_error(instance_of(Auth::TokenTamperDetected))
+    end
+  end
 end
