@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
     'Yusuf Sheikh <yusuf@madetech.com>',
     'Jaseera <jaseera@madetech.com>'
   ]
-  s.files = %w[lib/token.rb lib/token_processor.rb]
+  s.files = %w[lib/epb_auth_tools.rb]
   s.add_runtime_dependency 'jwt', ['~> 2.2']
   s.require_paths = %w[lib]
 end
