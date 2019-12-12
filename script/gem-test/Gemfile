@@ -4,4 +4,8 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'epb_auth_tools', git: "https://github.com/communitiesuk/epb-auth-tools"
+commit_hash = ENV['CODEBUILD_SOURCE_VERSION']
+
+gem 'epb_auth_tools',
+    git: 'https://github.com/communitiesuk/epb-auth-tools',
+    ref: commit_hash
