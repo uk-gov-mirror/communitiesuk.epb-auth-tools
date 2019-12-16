@@ -3,7 +3,7 @@
 module Auth
   class Token
     def initialize(payload)
-      @payload = payload
+      @payload = JSON.parse payload.to_json
       validate_payload
     end
 
@@ -18,9 +18,22 @@ module Auth
     private
 
     def validate_payload
-      raise Auth::TokenInstantiatedWithoutIssuer unless @payload.key?('iss')
+      unless @payload.key?('iss')
+        raise Auth::TokenErrors::InstantiatedWithoutIssuer
+      end
+      unless @payload.key?('sub')
+        raise Auth::TokenErrors::InstantiatedWithoutSubject
+      end
+      unless @payload.key?('iat')
+        raise Auth::TokenErrors::InstantiatedWithoutIssuedAt
+      end
     end
   end
 
-  class TokenInstantiatedWithoutIssuer < StandardError; end
+  module TokenErrors
+    class Error < StandardError; end
+    class InstantiatedWithoutIssuer < Auth::TokenErrors::Error; end
+    class InstantiatedWithoutSubject < Auth::TokenErrors::Error; end
+    class InstantiatedWithoutIssuedAt < Auth::TokenErrors::Error; end
+  end
 end
