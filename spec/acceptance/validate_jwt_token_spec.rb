@@ -70,6 +70,14 @@ describe Auth::TokenProcessor do
     end
   end
 
+  context 'when a token has not issued at attribute' do
+    it 'does throw an Auth::TokenMissingIatAttribute Error' do
+      expect {
+        @token_processor.process token_generate(@jwt_secret, :missing_issued_at_token)
+      }.to raise_error(instance_of(Auth::TokenMissingIatAttribute))
+    end
+  end
+
   context 'when a token does not have a subject' do
     it 'does throw an Auth::TokenHasNoSubject Error' do
       expect {

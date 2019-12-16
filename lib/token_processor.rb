@@ -13,6 +13,7 @@ module Auth
       payload, _header = jwt_process token
 
       raise Auth::TokenHasWrongIssuer unless payload['iss'] == @jwt_issuer
+      raise Auth::TokenMissingIatAttribute unless payload.key?('iat')
       raise Auth::TokenNotYetValid unless payload['iat'] <= Time.now.to_i
       raise Auth::TokenHasNoSubject unless payload.key?('sub')
 
@@ -41,6 +42,8 @@ module Auth
   class TokenHasWrongIssuer < JWT::InvalidIssuerError; end
 
   class TokenNotYetValid < JWT::InvalidIatError; end
+
+  class TokenMissingIatAttribute < JWT::InvalidIatError; end
 
   class TokenHasNoSubject < StandardError; end
 
