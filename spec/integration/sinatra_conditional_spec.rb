@@ -11,9 +11,7 @@ describe 'Integration::SinatraConditional' do
   end
 
   context 'when making an unauthenticated request to /' do
-    let(:response) do
-      get '/'
-    end
+    let(:response) { get '/' }
 
     it 'returns a 401 status' do
       expect(response.status).to eq 401
