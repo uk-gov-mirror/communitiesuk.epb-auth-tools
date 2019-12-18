@@ -1,5 +1,29 @@
+# frozen_string_literal: true
+
 require 'jwt'
 require 'uuid'
+require 'epb_auth_tools'
+require 'rack/test'
+require 'rspec'
+require 'zeitwerk'
+
+loader = Zeitwerk::Loader.new
+loader.push_dir("#{__dir__}/../lib/")
+
+loader.setup
+
+ENV['JWT_SECRET'] = 'TestingSecretString'
+ENV['JWT_ISSUER'] = 'test.issuer'
+
+RSpec::Matchers.define :be_a_valid_jwt_token do
+  match do |actual|
+    processor = Auth::TokenProcessor.new ENV['JWT_SECRET'], ENV['JWT_ISSUER']
+    _token = processor.process actual
+    true
+  rescue StandardError
+    false
+  end
+end
 
 def uuid_generate
   uuid = UUID.new
@@ -7,7 +31,7 @@ def uuid_generate
 end
 
 def token_payload(payload)
-  @jwt_issuer = 'test.issuer'
+  @jwt_issuer = ENV['JWT_ISSUER']
 
   payloads = {
     incorrect_issuer_token: {
@@ -61,6 +85,8 @@ def token_payload(payload)
   payloads[payload]
 end
 
-def token_generate(secret, payload)
-  JWT.encode token_payload(payload), secret, 'HS256'
+def token_generate(payload)
+  @jwt_secret = ENV['JWT_SECRET']
+
+  JWT.encode token_payload(payload), @jwt_secret, 'HS256'
 end

@@ -5,7 +5,14 @@ GEM
     jwt (2.2.1)
     macaddr (1.7.2)
       systemu (~> 2.6.5)
+    mustermann (1.0.3)
     prettier (0.16.0)
+    rack (2.0.7)
+    rack-protection (2.0.7)
+      rack
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
+    rake (13.0.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -19,9 +26,16 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
+    sinatra (2.0.7)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.7)
+      tilt (~> 2.0)
     systemu (2.6.5)
+    tilt (2.0.10)
     uuid (2.3.9)
       macaddr (~> 1.0)
+    zeitwerk (2.2.2)
 
 PLATFORMS
   ruby
@@ -29,8 +43,12 @@ PLATFORMS
 DEPENDENCIES
   jwt (~> 2.2)!
   prettier (~> 0.16.0)!
+  rack-test (~> 1.1)!
+  rake (~> 13.0)
   rspec (~> 3.0)!
+  sinatra (~> 2.0)!
   uuid (~> 2.3)!
+  zeitwerk (~> 2.2)
 
 RUBY VERSION
    ruby 2.6.4p104

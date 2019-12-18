@@ -12,10 +12,10 @@ module Auth
     def process(token)
       payload, _header = jwt_process token
 
-      raise Auth::TokenHasWrongIssuer unless payload['iss'] == @jwt_issuer
-      raise Auth::TokenMissingIatAttribute unless payload.key?('iat')
-      raise Auth::TokenNotYetValid unless payload['iat'] <= Time.now.to_i
-      raise Auth::TokenHasNoSubject unless payload.key?('sub')
+      raise Auth::Errors::TokenHasNoIssuer unless payload.key?('iss')
+      unless payload['iss'] == @jwt_issuer
+        raise Auth::Errors::TokenIssuerIncorrect
+      end
 
       Auth::Token.new payload
     end
@@ -27,25 +27,11 @@ module Auth
 
       JWT.decode token, @jwt_secret, true, options
     rescue JWT::ExpiredSignature
-      raise Auth::TokenExpired
+      raise Auth::Errors::TokenExpired
     rescue JWT::VerificationError
-      raise Auth::TokenTamperDetected
+      raise Auth::Errors::TokenTamperDetected
     rescue JWT::DecodeError
-      raise Auth::TokenMalformed
+      raise Auth::Errors::TokenDecodeError
     end
   end
-
-  class TokenMalformed < JWT::DecodeError; end
-
-  class TokenExpired < JWT::ExpiredSignature; end
-
-  class TokenHasWrongIssuer < JWT::InvalidIssuerError; end
-
-  class TokenNotYetValid < JWT::InvalidIatError; end
-
-  class TokenMissingIatAttribute < JWT::InvalidIatError; end
-
-  class TokenHasNoSubject < StandardError; end
-
-  class TokenTamperDetected < JWT::VerificationError; end
 end
