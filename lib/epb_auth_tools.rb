@@ -4,6 +4,8 @@ module Auth
   require_relative 'token'
   require_relative 'token_processor'
 
+  require_relative 'sinatra/conditional'
+
   module Errors
     class Error < RuntimeError; end
 
