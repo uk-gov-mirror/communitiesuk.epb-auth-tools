@@ -18,3 +18,34 @@ To test the gem, run `make test`.
 
 To ensure that all your code looks nice and conforms to the repo standards, run
 `make format`.
+
+## Sinatra Conditional Routing
+
+The epb-auth-tools module has a sinatra conditional routing helper class.
+
+To use this simply request epb_auth_tools and define the following in your
+application class.
+
+```ruby
+# frozen_string_literal: true
+
+require 'sinatra'
+require 'epb_auth_tools'
+
+class AppService < Sinatra::Base
+  set(:jwt_auth) do
+    condition do
+      Auth::Sinatra::Conditional.process_request env
+    rescue Auth::Errors::Error => e
+      content_type :json
+      halt 401, { error: e }.to_json
+    end
+  end
+
+  get '/', jwt_auth: [] do
+    content_type :json
+    status 200
+    { message: 'authenticated' }.to_json
+  end
+end
+```
