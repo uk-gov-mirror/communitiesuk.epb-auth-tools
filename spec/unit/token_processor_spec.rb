@@ -3,7 +3,7 @@
 require 'token_processor'
 require 'token'
 
-describe 'Unit::Auth::TokenProcessor' do
+describe Auth::TokenProcessor do
   before do
     @jwt_secret = ENV['JWT_SECRET']
     @jwt_issuer = ENV['JWT_ISSUER']

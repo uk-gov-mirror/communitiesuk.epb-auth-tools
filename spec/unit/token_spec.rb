@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Unit::Auth::Token' do
+describe Auth::Token do
   context 'when instantiating a token without an issuer' do
     it 'it raises an Auth::TokenErrors::InstantiatedWithoutIssuer Error' do
       expect {
