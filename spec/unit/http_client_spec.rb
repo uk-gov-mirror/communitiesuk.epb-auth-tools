@@ -14,5 +14,10 @@ describe Auth::HttpClient do
       }.to raise_error instance_of Auth::Errors::ClientHasNoClientSecret
     end
 
+    it 'raises Auth::Errors::ClientHasNoAuthServer with no auth_server' do
+      expect {
+        Auth::HttpClient.new 'client-id', 'client-secret'
+      }.to raise_error instance_of Auth::Errors::ClientHasNoAuthServer
+    end
   end
 end
