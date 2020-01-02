@@ -11,9 +11,10 @@ source 'https://rubygems.org' do
     gem 'rake', '~> 13.0'
     gem 'rspec', '~> 3.0'
     gem 'sinatra', '~> 2.0'
+    gem 'uuid', '~> 2.3'
     gem 'zeitwerk', '~> 2.2'
   end
 
   gem 'jwt', '~> 2.2'
-  gem 'uuid', '~> 2.3'
+  gem 'oauth2', '~> 1.4'
 end

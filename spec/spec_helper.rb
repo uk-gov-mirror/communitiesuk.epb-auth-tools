@@ -7,6 +7,8 @@ require 'rack/test'
 require 'rspec'
 require 'zeitwerk'
 
+require_relative 'stubs/oauth2_stub'
+
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
 loader.push_dir("#{__dir__}/../lib/sinatra")
