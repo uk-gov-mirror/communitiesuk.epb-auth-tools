@@ -36,9 +36,10 @@ module OAuth2Stub
     private
 
     def get_response(url)
-      return normal_response unless url.include? 'expired'
+      return expired_response if url.include? 'expired'
+      return html_response if url.include? 'html'
 
-      expired_response
+      normal_response
     end
 
     def normal_response
@@ -56,6 +57,13 @@ module OAuth2Stub
                                                    error:
                                                      'Auth::Errors::TokenExpired'
                                                  }
+    end
+
+    def html_response
+      OAuth2::Response.new Faraday::Response.new status: 401,
+                                                 reason_phrase: 'Unauthorized',
+                                                 response_headers: {},
+                                                 body: '<h1>HTML</h1>'
     end
   end
 end

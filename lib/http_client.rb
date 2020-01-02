@@ -43,7 +43,8 @@ module Auth
       if @authenticated_client.respond_to? method_name
         response = @authenticated_client.send method_name, *args, &block
 
-        if response.body[:error] == 'Auth::Errors::TokenExpired'
+        if response.body.is_a?(::Hash) &&
+           response.body[:error] == 'Auth::Errors::TokenExpired'
           refresh
           response = @authenticated_client.send method_name, *args, &block
         end
