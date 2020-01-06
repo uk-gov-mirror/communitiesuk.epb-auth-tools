@@ -50,6 +50,10 @@ describe Auth::HttpClient do
     it 'can call put' do
       expect(client.put('/put')).to be_instance_of OAuth2::Response
     end
+
+    it 'calling get and receiving HTML does not raise an error' do
+      expect(client.get('/get/html')).to be_instance_of OAuth2::Response
+    end
   end
 
   context 'instantiated with correct arguments but expired' do
@@ -68,19 +72,6 @@ describe Auth::HttpClient do
       expect(client.get('/get/expired')).to be_instance_of OAuth2::Response
 
       expect(client).to have_received :refresh
-    end
-  end
-
-  context 'instantiated with correct arguments but expired' do
-    let(:client) do
-      Auth::HttpClient.new @client_id,
-                           @client_secret,
-                           @auth_server,
-                           OAuth2Stub::Client
-    end
-
-    it 'calling get and receiving HTML does not raise an error' do
-      expect(client.get('/get/html')).to be_instance_of OAuth2::Response
     end
   end
 end
