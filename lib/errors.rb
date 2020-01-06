@@ -6,7 +6,7 @@ module Auth
 
     class Token < Auth::Errors::Error; end
 
-    class TokenPayloadError < Auth::Errors::Error; end
+    class TokenPayloadError < Auth::Errors::Token; end
     class TokenExpired < Auth::Errors::TokenPayloadError; end
     class TokenNotYetValid < Auth::Errors::TokenPayloadError; end
     class TokenHasNoIssuer < Auth::Errors::TokenPayloadError; end
@@ -15,7 +15,7 @@ module Auth
     class TokenHasNoExpiry < Auth::Errors::TokenPayloadError; end
     class TokenIssuerIncorrect < Auth::Errors::TokenPayloadError; end
 
-    class TokenDecodeError < Auth::Errors::Error; end
+    class TokenDecodeError < Auth::Errors::Token; end
     class TokenTamperDetected < Auth::Errors::TokenDecodeError; end
 
     class Client < Auth::Errors::Error; end
