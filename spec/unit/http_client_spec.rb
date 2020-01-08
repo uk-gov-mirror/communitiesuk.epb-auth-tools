@@ -3,6 +3,7 @@ require 'rspec'
 describe Auth::HttpClient do
   before do
     @auth_server = 'http://localhost:9292'
+    @base_uri = 'http://example.com'
     @client_id = 'client-id'
     @client_secret = 'client-secret'
   end
@@ -25,6 +26,12 @@ describe Auth::HttpClient do
         Auth::HttpClient.new 'client-id', 'client-secret'
       }.to raise_error instance_of Auth::Errors::ClientHasNoAuthServer
     end
+
+    it 'raises Auth::Errors::ClientHasNoBaseUri with no auth_server' do
+      expect {
+        Auth::HttpClient.new 'client-id', 'client-secret', 'http://bbc.co.uk'
+      }.to raise_error instance_of Auth::Errors::ClientHasNoBaseUri
+    end
   end
 
   context 'instantiated with correct arguments' do
@@ -32,6 +39,7 @@ describe Auth::HttpClient do
       Auth::HttpClient.new @client_id,
                            @client_secret,
                            @auth_server,
+                           @base_uri,
                            OAuth2Stub::Client
     end
 
@@ -61,6 +69,7 @@ describe Auth::HttpClient do
       Auth::HttpClient.new @client_id,
                            @client_secret,
                            @auth_server,
+                           @base_uri,
                            OAuth2Stub::Client
     end
 

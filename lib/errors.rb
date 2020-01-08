@@ -23,5 +23,6 @@ module Auth
     class ClientHasNoAuthServer < Auth::Errors::Client; end
     class ClientHasNoClientId < Auth::Errors::Client; end
     class ClientHasNoClientSecret < Auth::Errors::Client; end
+    class ClientHasNoBaseUri < Auth::Errors::Client; end
   end
 end

@@ -10,12 +10,15 @@ module Auth
       client_id = nil,
       client_secret = nil,
       auth_server = nil,
+      base_uri = nil,
       auth_client = OAuth2::Client
     )
       raise Auth::Errors::ClientHasNoClientId if client_id.nil?
       raise Auth::Errors::ClientHasNoClientSecret if client_secret.nil?
       raise Auth::Errors::ClientHasNoAuthServer if auth_server.nil?
+      raise Auth::Errors::ClientHasNoBaseUri if base_uri.nil?
 
+      @base_uri = base_uri
       @client = auth_client.new client_id, client_secret, site: auth_server
     end
 
@@ -39,6 +42,8 @@ module Auth
 
     def request(method_name, *args, &block)
       refresh? && refresh
+
+      args[0] = @base_uri + args[0]
 
       if @authenticated_client.respond_to? method_name
         response = @authenticated_client.send method_name, *args, &block
