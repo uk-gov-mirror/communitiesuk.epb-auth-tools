@@ -10,6 +10,7 @@ module Auth
 
     class Token < Auth::Errors::Error; end
 
+    class TokenMissing < Auth::Errors::Token; end
     class TokenPayloadError < Auth::Errors::Token; end
     class TokenExpired < Auth::Errors::TokenPayloadError; end
     class TokenNotYetValid < Auth::Errors::TokenPayloadError; end

@@ -12,7 +12,9 @@ module Auth
       @jwt_issuer = jwt_issuer
     end
 
-    def process(token)
+    def process(token = nil)
+      raise Auth::Errors::TokenMissing if token.nil?
+
       payload, _header = jwt_process token
 
       raise Auth::Errors::TokenHasNoIssuer unless payload.key?('iss')

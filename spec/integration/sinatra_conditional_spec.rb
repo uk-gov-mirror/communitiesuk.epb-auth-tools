@@ -17,8 +17,8 @@ describe 'Integration::SinatraConditional' do
       expect(response.status).to eq 401
     end
 
-    it 'gives a TokenDecodeError Error' do
-      expect(response.body).to include 'Auth::Errors::TokenDecodeError'
+    it 'gives a TokenMissing Error' do
+      expect(response.body).to include 'Auth::Errors::TokenMissing'
     end
   end
 
