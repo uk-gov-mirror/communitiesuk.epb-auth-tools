@@ -4,7 +4,10 @@ require 'jwt'
 
 module Auth
   class TokenProcessor
-    def initialize(jwt_secret, jwt_issuer)
+    def initialize(jwt_secret = nil, jwt_issuer = nil)
+      raise Auth::Errors::ProcessorHasNoSecret if jwt_secret.nil?
+      raise Auth::Errors::ProcessorHasNoIssuer if jwt_issuer.nil?
+
       @jwt_secret = jwt_secret
       @jwt_issuer = jwt_issuer
     end

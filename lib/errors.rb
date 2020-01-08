@@ -4,6 +4,10 @@ module Auth
   module Errors
     class Error < RuntimeError; end
 
+    class Processor < Auth::Errors::Error; end
+    class ProcessorHasNoSecret < Auth::Errors::Error; end
+    class ProcessorHasNoIssuer < Auth::Errors::Error; end
+
     class Token < Auth::Errors::Error; end
 
     class TokenPayloadError < Auth::Errors::Token; end
