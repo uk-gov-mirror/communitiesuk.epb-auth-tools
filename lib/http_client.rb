@@ -19,7 +19,7 @@ module Auth
       raise Auth::Errors::ClientHasNoBaseUri if base_uri.nil?
 
       @base_uri = base_uri
-      @client = auth_client.new client_id, client_secret, site: auth_server
+      @client = auth_client.new client_id, client_secret, site: auth_server, raise_errors: false
     end
 
     def refresh
