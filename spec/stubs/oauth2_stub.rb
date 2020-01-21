@@ -38,6 +38,7 @@ module OAuth2Stub
     def get_response(url)
       return expired_response if url.include? 'expired'
       return html_response if url.include? 'html'
+      return no_network if url.include? 'network_error'
 
       normal_response
     end
@@ -47,6 +48,10 @@ module OAuth2Stub
                                                  reason_phrase: 'OK',
                                                  response_headers: {},
                                                  body: {}
+    end
+
+    def no_network
+      raise Faraday::ConnectionFailed.new StandardError.new 'connection failed'
     end
 
     def expired_response

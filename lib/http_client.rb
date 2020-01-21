@@ -19,7 +19,10 @@ module Auth
       raise Auth::Errors::ClientHasNoBaseUri if base_uri.nil?
 
       @base_uri = base_uri
-      @client = auth_client.new client_id, client_secret, site: auth_server, raise_errors: false
+      @client =
+        auth_client.new client_id,
+                        client_secret,
+                        site: auth_server, raise_errors: false
     end
 
     def refresh
@@ -47,7 +50,6 @@ module Auth
 
       if @authenticated_client.respond_to? method_name
         response = @authenticated_client.send method_name, *args, &block
-
         if response.body.is_a?(::Hash) &&
              response.body[:error] == 'Auth::Errors::TokenExpired'
           refresh
@@ -56,6 +58,8 @@ module Auth
 
         response
       end
+    rescue Faraday::ConnectionFailed
+      raise Auth::Errors::NetworkConnectionFailed
     end
   end
 end

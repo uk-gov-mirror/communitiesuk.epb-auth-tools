@@ -83,4 +83,20 @@ describe Auth::HttpClient do
       expect(client).to have_received :refresh
     end
   end
+
+  context 'when there is no connection' do
+    let(:client) do
+      Auth::HttpClient.new @client_id,
+                           @client_secret,
+                           @auth_server,
+                           'http://localhost:19299',
+                           OAuth2Stub::Client
+    end
+
+    it 'raises Auth::Errors::NetworkConnectionFailed' do
+      expect {
+        client.get('/get/network_error')
+      }.to raise_error instance_of Auth::Errors::NetworkConnectionFailed
+    end
+  end
 end
