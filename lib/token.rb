@@ -15,6 +15,14 @@ module Auth
       scopes.all? { |scope| @payload['scopes'].include? scope }
     end
 
+    def supplemental(property = nil)
+      unless property.nil? || @payload['sup'][property].nil?
+        return @payload['sup'][property]
+      end
+
+      @payload['sup']
+    end
+
     def encode(jwt_secret)
       JWT.encode @payload, jwt_secret, 'HS256'
     end

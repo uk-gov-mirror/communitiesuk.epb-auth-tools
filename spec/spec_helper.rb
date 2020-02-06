@@ -76,6 +76,16 @@ def token_payload(payload)
       'sub': uuid_generate,
       'scopes': %w[scope:1 scope:2 scope:3]
     },
+    valid_token_with_sup: {
+      'exp': Time.now.to_i + 60 * 60,
+      'iat': Time.now.to_i,
+      'iss': @jwt_issuer,
+      'sub': uuid_generate,
+      'scopes': %w[scope:1 scope:2 scope:3],
+      'sup': {
+        'test': true
+      }
+    },
     valid_token: {
       'exp': Time.now.to_i + 60 * 60,
       'iat': Time.now.to_i,

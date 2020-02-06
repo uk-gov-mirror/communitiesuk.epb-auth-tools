@@ -31,4 +31,11 @@ describe Auth::Token do
       expect(token.encode(ENV['JWT_SECRET'])).to be_a_valid_jwt_token
     end
   end
+
+  context 'given a valid Token with supplemental data' do
+    it 'will generate a valid jwt token' do
+      token = Auth::Token.new token_payload :valid_token_with_sup
+      expect(token.encode(ENV['JWT_SECRET'])).to be_a_valid_jwt_token
+    end
+  end
 end

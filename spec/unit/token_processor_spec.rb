@@ -47,6 +47,26 @@ describe Auth::TokenProcessor do
       end
     end
 
+    context 'when a token is valid and has supplemental data' do
+      it 'does return an instance of Auth::Token' do
+        expect(
+          @token_processor.process(token_generate(:valid_token_with_sup))
+        ).to be_an_instance_of(Auth::Token)
+
+        expect(
+          @token_processor
+            .process(token_generate(:valid_token_with_sup))
+            .supplemental
+        ).to eq 'test' => true
+
+        expect(
+          @token_processor
+            .process(token_generate(:valid_token_with_sup))
+            .supplemental('test')
+        ).to eq true
+      end
+    end
+
     context 'when a token is not a JWT token' do
       it 'does throw an Auth::Errors::TokenDecodeError Error' do
         expect { @token_processor.process @malformed_token }.to raise_error(
