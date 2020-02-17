@@ -18,6 +18,7 @@ module Auth
       raise Auth::Errors::ClientHasNoAuthServer if auth_server.nil?
       raise Auth::Errors::ClientHasNoBaseUri if base_uri.nil?
 
+      @authenticated_client = nil
       @base_uri = base_uri
       @client =
         auth_client.new client_id,
