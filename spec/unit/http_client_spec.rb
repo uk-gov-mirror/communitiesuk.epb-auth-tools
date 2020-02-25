@@ -84,6 +84,38 @@ describe Auth::HttpClient do
     end
   end
 
+  context 'when the auth server is not running at the root of the hostname' do
+    let(:client) do
+      Auth::HttpClient.new @client_id,
+                           @client_secret,
+                           @auth_server + '/prefix',
+                           'http://localhost:19299',
+                           OAuth2::Client
+    end
+
+    it 'the client makes a request on the prefix address' do
+      response_body = {
+        access_token: token_generate(:valid_token),
+        token_type: 'bearer',
+        expires_in: 3_600
+      }.to_json
+
+      token_request =
+        stub_request(:post, @auth_server + '/prefix/oauth/token').to_return(
+          status: 200,
+          body: response_body,
+          headers: {
+            'Content-Length' => response_body.length,
+            'Content-Type' => 'application/json'
+          }
+        )
+
+      client.refresh
+
+      expect(token_request).to have_been_requested
+    end
+  end
+
   context 'when there is no connection' do
     let(:client) do
       Auth::HttpClient.new @client_id,

@@ -5,6 +5,7 @@ require 'uuid'
 require 'epb_auth_tools'
 require 'rack/test'
 require 'rspec'
+require 'webmock/rspec'
 require 'zeitwerk'
 
 require_relative 'stubs/oauth2_stub'
@@ -82,9 +83,7 @@ def token_payload(payload)
       'iss': @jwt_issuer,
       'sub': uuid_generate,
       'scopes': %w[scope:1 scope:2 scope:3],
-      'sup': {
-        'test': true
-      }
+      'sup': { 'test': true }
     },
     valid_token: {
       'exp': Time.now.to_i + 60 * 60,

@@ -19,11 +19,21 @@ module Auth
       raise Auth::Errors::ClientHasNoBaseUri if base_uri.nil?
 
       @authenticated_client = nil
+
+      site_url = URI.parse(auth_server)
+      token_url = site_url.path + '/oauth/token'
+      authorisation_url = site_url.path + '/oauth/token'
+      site_url = "#{site_url.scheme}://#{site_url.host}:#{site_url.port}"
+
+
       @base_uri = base_uri
       @client =
         auth_client.new client_id,
                         client_secret,
-                        site: auth_server, raise_errors: false
+                        site: site_url,
+                        token_url: token_url,
+                        authorisation_url: authorisation_url,
+                        raise_errors: false
     end
 
     def refresh

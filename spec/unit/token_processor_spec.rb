@@ -54,14 +54,12 @@ describe Auth::TokenProcessor do
         ).to be_an_instance_of(Auth::Token)
 
         expect(
-          @token_processor
-            .process(token_generate(:valid_token_with_sup))
+          @token_processor.process(token_generate(:valid_token_with_sup))
             .supplemental
         ).to eq 'test' => true
 
         expect(
-          @token_processor
-            .process(token_generate(:valid_token_with_sup))
+          @token_processor.process(token_generate(:valid_token_with_sup))
             .supplemental('test')
         ).to eq true
       end
