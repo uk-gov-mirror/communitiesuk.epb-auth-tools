@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 Gem::Specification.new do |s|
-  s.name = 'epb_auth_tools'
+  s.name = 'epb-auth-tools'
   s.version = '1.0.0'
   s.date = '2020-03-11'
   s.summary = 'Tools for authentication and authorisation with JWTs and OAuth'
+  s.license = 'MIT'
+  s.homepage = 'https://github.com/communitiesuk/epb-auth-tools'
   s.authors = [
     'Lawrence Goldstien <lawrence.goldstien@madetech.com>',
     'Yusuf Sheikh <yusuf@madetech.com>',
