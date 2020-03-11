@@ -6,6 +6,6 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 commit_hash = ENV['CODEBUILD_RESOLVED_SOURCE_VERSION']
 
-gem 'epb_auth_tools',
+gem 'epb-auth-tools',
     git: 'https://github.com/communitiesuk/epb-auth-tools',
     ref: commit_hash
