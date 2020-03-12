@@ -2,7 +2,7 @@
 
 require 'jwt'
 require 'uuid'
-require 'epb_auth_tools'
+require 'epb-auth-tools'
 require 'rack/test'
 require 'rspec'
 require 'webmock/rspec'
@@ -13,6 +13,9 @@ require_relative 'stubs/oauth2_stub'
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
 loader.push_dir("#{__dir__}/../lib/sinatra")
+loader.inflector.inflect(
+  'epb-auth-tools' => 'Auth'
+)
 
 loader.setup
 

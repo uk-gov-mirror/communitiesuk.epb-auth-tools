@@ -30,7 +30,7 @@ application class.
 # frozen_string_literal: true
 
 require 'sinatra'
-require 'epb_auth_tools'
+require 'epb-auth-tools'
 
 class AppService < Sinatra::Base
   set(:jwt_auth) do

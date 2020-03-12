@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = 'epb-auth-tools'
-  s.version = '1.0.0'
+  s.version = '1.0.2'
   s.date = '2020-03-11'
   s.summary = 'Tools for authentication and authorisation with JWTs and OAuth'
   s.license = 'MIT'
@@ -12,9 +12,8 @@ Gem::Specification.new do |s|
     'Yusuf Sheikh <yusuf@madetech.com>',
     'Jaseera <jaseera@madetech.com>'
   ]
-  s.files = %w[lib/epb_auth_tools.rb]
+  s.files = %w[lib/epb-auth-tools.rb lib/errors.rb lib/http_client.rb lib/token.rb lib/token_processor.rb lib/sinatra/conditional.rb]
   s.add_runtime_dependency 'jwt', ['~> 2.2']
   s.add_runtime_dependency 'oauth2', ['~> 1.4']
   s.require_paths = %w[lib]
 end
-
