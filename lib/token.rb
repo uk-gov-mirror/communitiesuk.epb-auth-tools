@@ -8,11 +8,11 @@ module Auth
     end
 
     def scope?(scope)
-      @payload['scopes'].include? scope
+      @payload['scopes']&.include? scope
     end
 
     def scopes?(scopes)
-      scopes.all? { |scope| @payload['scopes'].include? scope }
+      scopes.all? { |scope| @payload['scopes']&.include? scope }
     end
 
     def supplemental(property = nil)

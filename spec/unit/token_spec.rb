@@ -38,4 +38,13 @@ describe Auth::Token do
       expect(token.encode(ENV['JWT_SECRET'])).to be_a_valid_jwt_token
     end
   end
+
+  context 'given a valid Token without any scopes' do
+    it 'will return false for token.scopes?' do
+      token = Auth::Token.new token_payload :valid_token_missing_scopes
+      expect(token.encode(ENV['JWT_SECRET'])).to be_a_valid_jwt_token
+      expect(token.scopes?(['test'])).to be_falsey
+      expect(token.scope?('test')).to be_falsey
+    end
+  end
 end
