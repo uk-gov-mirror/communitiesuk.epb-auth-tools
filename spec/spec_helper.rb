@@ -49,7 +49,13 @@ def token_payload(payload)
       'scopes': %w[scope:1 scope:2 scope:3]
     },
     expired_token: {
-      'exp': Time.now.to_i - 60 * 60,
+      'exp': Time.now.to_i - 3600,
+      'iat': Time.now.to_i - 7200,
+      'iss': @jwt_issuer,
+      'sub': uuid_generate,
+      'scopes': %w[scope:1 scope:2 scope:3]
+    },
+    token_without_expiry: {
       'iat': Time.now.to_i,
       'iss': @jwt_issuer,
       'sub': uuid_generate,

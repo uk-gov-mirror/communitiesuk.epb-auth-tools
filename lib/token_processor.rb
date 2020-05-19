@@ -17,6 +17,7 @@ module Auth
 
       payload, _header = jwt_process token
 
+      raise Auth::Errors::TokenExpired unless payload.key?('exp')
       raise Auth::Errors::TokenHasNoIssuer unless payload.key?('iss')
       unless payload['iss'] == @jwt_issuer
         raise Auth::Errors::TokenIssuerIncorrect
