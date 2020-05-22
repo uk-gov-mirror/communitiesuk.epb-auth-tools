@@ -32,6 +32,10 @@ RSpec::Matchers.define :be_a_valid_jwt_token do
   end
 end
 
+RSpec::Matchers.define :be_a_valid_uuid do
+  match { |actual| !UUID.validate(actual).nil? }
+end
+
 def uuid_generate
   uuid = UUID.new
   uuid.generate

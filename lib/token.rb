@@ -7,6 +7,10 @@ module Auth
       validate_payload
     end
 
+    def sub
+      @payload['sub']
+    end
+
     def scope?(scope)
       @payload['scopes']&.include? scope
     end

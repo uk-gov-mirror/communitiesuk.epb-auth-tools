@@ -14,6 +14,12 @@ describe Auth::TokenProcessor do
     end
 
     context 'when a token is valid' do
+      it 'allows access to the subject of the token' do
+        expect(
+          @token_processor.process(token_generate(:valid_token)).sub
+        ).to be_a_valid_uuid
+      end
+
       it 'does return an instance of Auth::Token' do
         expect(
           @token_processor.process(token_generate(:valid_token))
