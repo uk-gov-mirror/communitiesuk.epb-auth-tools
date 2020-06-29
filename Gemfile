@@ -13,7 +13,7 @@ source 'https://rubygems.org' do
     gem 'sinatra', '~> 2.0'
     gem 'uuid', '~> 2.3'
     gem 'webmock', '~> 3.8'
-    gem 'zeitwerk', '~> 2.2'
+    gem 'zeitwerk', '~> 2.3'
   end
 
   gem 'jwt', '~> 2.2'
