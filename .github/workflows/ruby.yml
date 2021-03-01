@@ -22,6 +22,8 @@ jobs:
     # Automatically gets bug fixes and new Ruby versions
     # (see https://github.com/ruby/setup-ruby#versioning):
       uses: ruby/setup-ruby@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
       with:
         ruby-version: 2.6
     - name: Install dependencies
