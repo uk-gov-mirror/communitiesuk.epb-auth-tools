@@ -25,7 +25,6 @@ module Auth
       authorisation_url = site_url.path + '/oauth/token'
       site_url = "#{site_url.scheme}://#{site_url.host}:#{site_url.port}"
 
-
       @base_uri = base_uri
       @client =
         auth_client.new client_id,

@@ -13,9 +13,7 @@ require_relative 'stubs/oauth2_stub'
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
 loader.push_dir("#{__dir__}/../lib/sinatra")
-loader.inflector.inflect(
-  'epb-auth-tools' => 'Auth'
-)
+loader.inflector.inflect('epb-auth-tools' => 'Auth')
 
 loader.setup
 
@@ -96,7 +94,9 @@ def token_payload(payload)
       'iss': @jwt_issuer,
       'sub': uuid_generate,
       'scopes': %w[scope:1 scope:2 scope:3],
-      'sup': { 'test': true }
+      'sup': {
+        'test': true
+      }
     },
     valid_token: {
       'exp': Time.now.to_i + 60 * 60,
@@ -106,10 +106,10 @@ def token_payload(payload)
       'scopes': %w[scope:1 scope:2 scope:3]
     },
     valid_token_missing_scopes: {
-        'exp': Time.now.to_i + 60 * 60,
-        'iat': Time.now.to_i,
-        'iss': @jwt_issuer,
-        'sub': uuid_generate
+      'exp': Time.now.to_i + 60 * 60,
+      'iat': Time.now.to_i,
+      'iss': @jwt_issuer,
+      'sub': uuid_generate
     }
   }
 

@@ -28,27 +28,27 @@ describe Auth::TokenProcessor do
 
       it 'does allow checking a scope' do
         expect(
-          @token_processor.process(token_generate(:valid_token)).scope?(
-            'scope:1'
-          )
+          @token_processor
+            .process(token_generate(:valid_token))
+            .scope?('scope:1')
         ).to be true
         expect(
-          @token_processor.process(token_generate(:valid_token)).scope?(
-            'does-not-exist'
-          )
+          @token_processor
+            .process(token_generate(:valid_token))
+            .scope?('does-not-exist')
         ).to be false
       end
 
       it 'does allow checking a number of scopes' do
         expect(
-          @token_processor.process(token_generate(:valid_token)).scopes?(
-            %w[scope:1 scope:2]
-          )
+          @token_processor
+            .process(token_generate(:valid_token))
+            .scopes?(%w[scope:1 scope:2])
         ).to be true
         expect(
-          @token_processor.process(token_generate(:valid_token)).scope?(
-            %w[scope:1 does-not-exist]
-          )
+          @token_processor
+            .process(token_generate(:valid_token))
+            .scope?(%w[scope:1 does-not-exist])
         ).to be false
       end
     end
@@ -65,7 +65,8 @@ describe Auth::TokenProcessor do
         ).to eq 'test' => true
 
         expect(
-          @token_processor.process(token_generate(:valid_token_with_sup))
+          @token_processor
+            .process(token_generate(:valid_token_with_sup))
             .supplemental('test')
         ).to eq true
       end
